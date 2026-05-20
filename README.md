@@ -2,9 +2,13 @@
 
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
-`Engression.jl` is a Julia implementation of **Engression**, a distributional regression method based on Energy Loss. It allows you to estimate the entire conditional distribution $P(Y|X)$ by training a stochastic neural network.
+`Engression.jl` is a Julia implementation of engression, a distributional
+regression method based on the energy score. Instead of estimating only
+`E[Y | X]`, it fits a stochastic neural network that can be sampled from
+`P(Y | X)`.
 
-This package is a Julia port of the `engression` algorithm, which is particularly useful for tasks where the conditional distribution is non-Gaussian, multi-modal, or heteroskedastic.
+I use this package in the distributional DiD and mediation examples, where the
+counterfactual object is a distribution rather than a single conditional mean.
 
 ## Installation
 
@@ -45,12 +49,11 @@ y_q90 = predict(model, x, target=0.9)
 samples = sample(model, x; sample_size=100)
 ```
 
-## Key Features
+## What is included
 
-- **Energy Loss:** Uses a robust loss function that doesn't require parametric assumptions about the error distribution.
-- **Stochastic Neural Network:** The model captures the distribution by injecting noise into the hidden layers.
-- **GPU Support:** Automatically uses CUDA if available (via Flux.jl and CUDA.jl).
-- **Flexible Predictions:** Easily extract means, medians, quantiles, or full samples from the estimated distribution.
+- Energy-score training for stochastic neural networks.
+- Conditional means, medians, quantiles, and simulated draws.
+- CUDA support through Flux and CUDA when a GPU is available.
 
 ## API Reference
 
