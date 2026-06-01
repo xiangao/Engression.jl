@@ -88,14 +88,14 @@ function energy_loss(y_true, y_est1, y_est2, beta=1.0f0)
     
     # E[||Y - Ŷ||^β]
     diff1 = y_true .- y_est1
-    s1 = mean(p -> sum(abs2, p)^(beta/2), eachcol(diff1))
+    s1 = mean(p -> (sum(abs2, p) + 1.0f-6)^(beta/2), eachcol(diff1))
     
     diff2 = y_true .- y_est2
-    s1 = (s1 + mean(p -> sum(abs2, p)^(beta/2), eachcol(diff2))) / 2
+    s1 = (s1 + mean(p -> (sum(abs2, p) + 1.0f-6)^(beta/2), eachcol(diff2))) / 2
     
     # E[||Ŷ - Ŷ'||^β]
     diff_est = y_est1 .- y_est2
-    s2 = mean(p -> sum(abs2, p)^(beta/2), eachcol(diff_est))
+    s2 = mean(p -> (sum(abs2, p) + 1.0f-6)^(beta/2), eachcol(diff_est))
     
     return s1 - 0.5f0 * s2
 end
